@@ -1,7 +1,7 @@
 import { Badge, Button, IconKey, IconLock, IconMail, Input, Modal, Typography } from '@supabase/ui'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { signUp, signIn } from '../../utils/supabaseClient'
+// import { signUp, signIn } from '../../utils/supabaseClient'
 
 const LogInModal = ({ visible = false, onCloseModal = () => {}, onLoginSuccess = () => {} }) => {
   const [email, setEmail] = useState('')
@@ -35,32 +35,37 @@ const LogInModal = ({ visible = false, onCloseModal = () => {}, onLoginSuccess =
     return re.test(String(email).toLowerCase())
   }
 
-  const onSignIn = async (event) => {
-    event.preventDefault()
+  // const onSignIn = async (event) => {
+  //   event.preventDefault()
 
-    if (!email) {
-      return toast.error('Please enter an email address')
-    }
+  //   if (!email) {
+  //     return toast.error('Please enter an email address')
+  //   }
 
-    if (!validateEmail(email)) {
-      return toast.error('Please enter a valid email')
-    }
+  //   if (!validateEmail(email)) {
+  //     return toast.error('Please enter a valid email')
+  //   }
 
-    if (!password) {
-      return toast.error('Please enter a password')
-    }
+  //   if (!password) {
+  //     return toast.error('Please enter a password')
+  //   }
 
-    setLoading(true)
-    const { user, session, error } =
-      view === 'SIGN_IN' ? await signIn(email, password) : await signUp(email, password)
-    setLoading(false)
-    if (error) {
-      toast.error(error.message)
-    } else {
-      onLoginSuccess(user, session)
-    }
+  //   setLoading(true)
+  //   const { user, session, error } =
+  //     view === 'SIGN_IN' ? await signIn(email, password) : await signUp(email, password)
+  //   setLoading(false)
+  //   if (error) {
+  //     toast.error(error.message)
+  //   } else {
+  //     onLoginSuccess(user, session)
+  //   }
+  // }
+
+  const onSignIn = () => {
+
   }
 
+  
   return (
     <Modal
       className=""

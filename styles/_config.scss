@@ -1,0 +1,78 @@
+$primary-color: #24b47e; //#9E5F0A  //#24b47e
+$text-color: #707070;
+$gradient-color: linear-gradient(to right, #E66B32 , #D9202D, #A31E23);
+$radius: 7px;
+
+$dark-color: #181818;
+
+
+
+@mixin easeInOut {
+    transition: all .5s ease;
+  }
+
+ 
+
+
+  a{
+    text-decoration: none !important;
+    @include easeInOut;
+  }
+
+  .btn{
+    height: 35px;
+    min-width: max-content !important;
+    &:hover{
+      @include easeInOut;
+    }
+  }
+  .btn-primary {
+    color: #fff;
+    background: $primary-color !important;
+    border-radius: $radius !important;
+    &:hover{
+    }
+    
+}
+
+
+.secondary-btn{
+  background-color: #a09c9c !important;
+  color:#fff  !important;
+  border: 1px solid #aca9a9 !important;
+  .dark-mode & {
+    background-color:#444444  !important;
+    color: #c3bfbf !important;
+    border: 1px solid #535252 !important;
+  }
+ 
+}
+
+button{
+  &:focus{
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+
+.dropdown-menu{
+  background-color: #a09c9c !important;
+  .dropdown-itemm, a{
+    color:#fff  !important;
+    &:hover{
+      background-color: darken(#a09c9c , 20);
+    }
+  }
+
+  .dark-mode & {
+    background-color:#444444  !important;
+    .dropdown-itemm, a{
+      color: #c3bfbf !important;
+      &:hover{
+        background-color: darken(#444444 , 20);
+      }
+    }
+  }
+}

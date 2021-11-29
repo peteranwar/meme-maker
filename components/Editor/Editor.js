@@ -4,12 +4,13 @@ import {
   Input,
   Button,
   IconType,
-  Dropdown,
   IconChevronDown,
   IconSave,
   IconImage,
   IconArchive,
 } from '@supabase/ui'
+import { Dropdown } from 'react-bootstrap';
+
 import { useEffect, useState, useRef } from 'react'
 import * as R from 'ramda'
 import confetti from 'canvas-confetti'
@@ -20,6 +21,7 @@ import {
   getCanvasJson,
   dataURLtoFile,
 } from '../../utils/editor'
+import useTranslation from 'next-translate/useTranslation'
 
 
 import EmptyState from './EmptyState'
@@ -45,13 +47,18 @@ const Editor = ({
   selectedTemplate = null,
   uploadedFileUrl = '',
   uploading = false,
-  onTemplateUpload = () => {},
-  onSelectChangeTemplate = () => {},
+  onTemplateUpload = () => { },
+  onSelectChangeTemplate = () => { },
 }) => {
   const editorDimensions = {
-    width: isMobile ? 400 : 800,
-    height: isMobile ? 400 : 450,
+    // width: isMobile ? 400 : 800,
+    // height: isMobile ? 400 : 450,
+    width: 1120,
+    height: 450,
   }
+
+  const { t, i18n } = useTranslation('common')
+
 
   const editorRef = useRef(null)
   const copiedObject = useRef(null)
@@ -368,108 +375,111 @@ const Editor = ({
   }
 
   return (
-    <div className="flex flex-col items-center space-y-3">
-      <div className="hidden">
-        <input
-          ref={uploadStickerButtonRef}
-          type="file"
-          accept=".png, .jpg, .jpeg"
-          onChange={uploadSticker}
-        />
-      </div>
-      <div className="w-full flex flex-col sm:flex-row space-y-2 sm:space-y-0 items-center justify-between">
-        {isTextObjectSelected ? (
-          <div className="flex items-center space-x-2">
-            <FontFamily
-              fonts={DEFAULT_FONTS}
-              selectedObject={selectedObject}
-              updateTextAttribute={updateTextAttribute}
+    <div className="container editor-container">
+      <div className="row justify-content-center">
+        <div className=" col-md-12">
+
+          <div className="d-none">
+            <input
+              ref={uploadStickerButtonRef}
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              onChange={uploadSticker}
             />
-
-            <FontSize selectedObject={selectedObject} updateTextAttribute={updateTextAttribute} />
-
-            <div className="flex items-center space-x-1">
-              <TextFillColour
-                swatches={DEFAULT_SWATCHES}
-                selectedObject={selectedObject}
-                updateTextAttribute={updateTextAttribute}
-              />
-
-              <TextStrokeColour
-                swatches={DEFAULT_SWATCHES}
-                selectedObject={selectedObject}
-                updateTextAttribute={updateTextAttribute}
-              />
-
-              <TextAlign
-                selectedObject={selectedObject}
-                updateTextAttribute={updateTextAttribute}
-              />
-            </div>
           </div>
-        ) : (
-          <div />
-        )}
+          <div className="w-full flex flex-col sm:flex-row space-y-2 sm:space-y-0 items-center justify-between">
+            {isTextObjectSelected ? (
+              <div className="flex items-center space-x-2">
+                <FontFamily
+                  fonts={DEFAULT_FONTS}
+                  selectedObject={selectedObject}
+                  updateTextAttribute={updateTextAttribute}
+                />
 
-        {!isCanvasEmpty ? (
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="flex items-center space-x-1">
-              {!R.isNil(selectedObject) && (
-                <LayerOrder
-                  shiftObjectForward={shiftObjectForward}
-                  shiftObjectBackward={shiftObjectBackward}
-                />
-              )}
-              {!R.isNil(selectedObject) && <Remove onRemoveObject={removeObject} />}
-              <StickerSelection
-                stickers={stickers}
-                onAddSticker={addSticker}
-                onSelectUploadSticker={onSelectUploadSticker}
-              />
-              <div className="h-10 flex">
-                <Button
-                  type="text"
-                  icon={<IconType size="medium" strokeWidth={2} />}
-                  onClick={addNewText}
-                />
+                <FontSize selectedObject={selectedObject} updateTextAttribute={updateTextAttribute} />
+
+                <div className="flex items-center space-x-1">
+                  <TextFillColour
+                    swatches={DEFAULT_SWATCHES}
+                    selectedObject={selectedObject}
+                    updateTextAttribute={updateTextAttribute}
+                  />
+
+                  <TextStrokeColour
+                    swatches={DEFAULT_SWATCHES}
+                    selectedObject={selectedObject}
+                    updateTextAttribute={updateTextAttribute}
+                  />
+
+                  <TextAlign
+                    selectedObject={selectedObject}
+                    updateTextAttribute={updateTextAttribute}
+                  />
+                </div>
               </div>
-            </div>
-            <Button type="secondary" onClick={onSelectChangeTemplate}>
-              Change template
-            </Button>
+            ) : (
+              <div />
+            )}
+
+            {!isCanvasEmpty ? (
+              <div className="flex items-center space-x-2 sm:space-x-4">
+                <div className="flex items-center space-x-1">
+                  {!R.isNil(selectedObject) && (
+                    <LayerOrder
+                      shiftObjectForward={shiftObjectForward}
+                      shiftObjectBackward={shiftObjectBackward}
+                    />
+                  )}
+                  {!R.isNil(selectedObject) && <Remove onRemoveObject={removeObject} />}
+                  <StickerSelection
+                    stickers={stickers}
+                    onAddSticker={addSticker}
+                    onSelectUploadSticker={onSelectUploadSticker}
+                  />
+                  <div className="h-10 flex">
+                    <Button
+                      type="text"
+                      icon={<IconType size="medium" strokeWidth={2} />}
+                      onClick={addNewText}
+                    />
+                  </div>
+                </div>
+                <Button type="secondary" onClick={onSelectChangeTemplate}>
+                  Change template
+                </Button>
+              </div>
+            ) : (
+              <div className="h-[40px]" />
+            )}
           </div>
-        ) : (
-          <div className="h-[40px]" />
-        )}
-      </div>
 
-      <div
-        className="border border-gray-500 rounded-md flex items-center justify-center relative"
-        style={{ width: editorDimensions.width }}
-      >
-        {isCanvasEmpty && (
-          <EmptyState
-            uploading={uploading}
-            onFilesUpload={onTemplateUpload}
-            onSelectChangeTemplate={onSelectChangeTemplate}
-          />
-        )}
-        <canvas id="editor" width={editorDimensions.width} height={editorDimensions.height} />
-      </div>
+          <div
+            className="border border-gray-500 rounded-md flex items-center justify-center relative"
+            style={{ width: editorDimensions.width }}
+          >
+            {isCanvasEmpty && (
+              <EmptyState
+                uploading={uploading}
+                onFilesUpload={onTemplateUpload}
+                onSelectChangeTemplate={onSelectChangeTemplate}
+              />
+            )}
+            <canvas id="editor" width={editorDimensions.width} height={editorDimensions.height} />
+          </div>
 
-      {!isCanvasEmpty && (
-        <div className="w-full flex items-center justify-between">
-          {isAdmin ? (
-            <Input
-              className="w-64"
-              placeholder="Name your meme template"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-          ) : (
-            <div />
-          )}
-          <Dropdown
+          {!isCanvasEmpty && (
+            <div className="w-full flex items-center justify-between">
+              {isAdmin ? (
+                <Input
+                  className="w-64"
+                  placeholder="Name your meme template"
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                />
+              ) : (
+                <div />
+              )}
+              {/* <Dropdown
             align="end"
             overlay={[
               ...(isAdmin
@@ -497,9 +507,25 @@ const Editor = ({
             >
               Save
             </Button>
-          </Dropdown>
+          </Dropdown> */}
+              <Dropdown className="mx-2 my-2">
+                <Dropdown.Toggle className="secondary-btn d-flex align-items-center" id="dropdown-basic">
+                  <span className="mx-2  pb-1"> {t('editor.save')}</span>
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item className="d-flex" onClick={onSaveTemplate}>
+                    <IconSave /> <span className="mx-2">{t('editor.save-meme')}</span>
+                  </Dropdown.Item>
+                  <Dropdown.Item className="d-flex" onClick={onExportCanvas}>
+                    <IconImage /> <span className="mx-2">{t('editor.export')}</span> 
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }

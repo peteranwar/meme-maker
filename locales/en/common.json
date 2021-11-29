@@ -1,5 +1,39 @@
 {
-  "title": "Example with-next-translate",
-  "powered": "Powered by",
-  "alt": "Vercel logo"
+  "navbar": {
+    "login": "Log in",
+    "browse-memes": "Browes memes",
+    "your-memes": "Your saved memes",
+    "community-memes": "Community memes"
+  },
+  "login": {
+    "title": "Makes memes great again!",
+    "subtitle": "Signing in gives you access to features:",
+    "text1": "Claim, save, and publish your memes",
+    "text2": "Be part of our meme community",
+    "text3": "Fight for the 'Meme of the month' title!",
+    "email": "Email address",
+    "password": "Password",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "not-have": "Don't have an account? Sign up",
+    "have": "Have an account? Sign in"
+  },
+  "home": {
+    "title": " <0>Create your <1> best memes </1>within seconds</0> ",
+    "subtitle": "Here we love memes - and so here's a meme maker",
+    "upload-image": "Upload your own image",
+    "select-template": "Select a template"
+  },
+  "me": {
+    "not-pass": {
+      "title": "YOU SHALL NOT PASS",
+      "subtitle": "Log in to view your saved memes or...",
+      "link": "Create some memes first!"
+    }
+  },
+  "editor": {
+    "save": "Save",
+    "save-meme": "Save your meme",
+    "export": "Eport as PNG"
+  }
 }

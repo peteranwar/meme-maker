@@ -4,12 +4,10 @@ import Trans from 'next-translate/Trans'
 import useTranslation from 'next-translate/useTranslation'
 import * as R from 'ramda'
 
-import Layout from '../components/Layout'
 import Editor from '../components/Editor/Editor'
+import TemplatesPanel from '../components/TemplatesPanel/TemplatesPanel'
 export default function Home() {
-  const { t, lang } = useTranslation()
-  const isRTL = lang === 'ar' || lang === 'he'
-  const arrow = isRTL ? String.fromCharCode(8592) : String.fromCharCode(8594)
+  const { t, lang } = useTranslation('common')
 
 
   const [templates, setTemplates] = useState([])
@@ -33,18 +31,18 @@ export default function Home() {
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
 
-        fileReader.onload = () => {
-            resolve(fileReader.result);
-        };
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
 
-        fileReader.onerror = (error) => {
-            reject(error);
-        };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
     });
-};
+  };
 
   const onTemplateUpload = async (event) => {
     setUploading(true)
@@ -70,76 +68,62 @@ export default function Home() {
   }
 
   return (
-    <Layout>
-      <main dir={isRTL ? 'rtl' : 'ltr'}>
-        <Trans
+    <div className="home-page">
+      {/* <Trans
           i18nKey="home:title"
           components={[
             <h1 className="title" />,
             <a href="https://nextjs.org">Next.js!</a>,
           ]}
+        /> */}
+
+
+
+      <div className="">
+        <div className="text-center pt-3 pb-4">
+          {<Trans
+            i18nKey="common:home.title"
+            components={[
+              <h1 className="title"/>,
+              <span ></span>,
+            ]}
+          />}
+
+        <h4 className="subtitle">{t('home.subtitle')}</h4>
+          
+        </div>
+
+        {typeof window !== 'undefined' && (
+          <Editor
+            // stickers={stickers}
+            // templates={templates}
+            isMobile={isMobile}
+            // isAdmin={isAdmin}
+            loadTemplate={loadTemplate}
+
+            selectedTemplate={selectedTemplate}
+            uploading={uploading}
+            uploadedFileUrl={uploadedFileUrl}
+            onTemplateUpload={onTemplateUpload}
+            onSelectChangeTemplate={onSelectChangeTemplate}
+          />
+        )}
+
+<TemplatesPanel
+          templates={templates}
+          loadingAssets={loadingAssets}
+          uploading={uploading}
+          visible={showTemplatesPanel}
+          loadTemplate={loadTemplate}
+          onTemplateUpload={onTemplateUpload}
+          hideTemplatesPanel={() => setShowTemplatesPanel(false)}
         />
 
-        <p className="description">
-          {t('home:description')} <code>_pages/index.js</code>
-        </p>
 
-        <div className="grid">
-          <Link href="/" locale="en">
-            <div className="card">
-              <h3>{t('home:english')}</h3>
-              <p>{t('home:change-english')}</p>
-            </div>
-          </Link>
 
-          <Link href="/" locale="ca">
-            <div className="card">
-              <h3>{t('home:catalan')}</h3>
-              <p>{t('home:change-catalan')}</p>
-            </div>
-          </Link>
+      </div>
 
-          <Link href="/" locale="ar">
-            <div className="card">
-              <h3>{t('home:arabic')}</h3>
-              <p>{t('home:change-arabic')}</p>
-            </div>
-          </Link>
 
-          <Link href="/" locale="he">
-            <div className="card">
-              <h3>{t('home:hebrew')}</h3>
-              <p>{t('home:change-hebrew')}</p>
-            </div>
-          </Link>
-          {typeof window !== 'undefined' && (
-                <Editor
-                // stickers={stickers}
-                // templates={templates}
-                isMobile={isMobile}
-                // isAdmin={isAdmin}
-          loadTemplate={loadTemplate}
-
-                selectedTemplate={selectedTemplate}
-                uploading={uploading}
-                uploadedFileUrl={uploadedFileUrl}
-                onTemplateUpload={onTemplateUpload}
-                onSelectChangeTemplate={onSelectChangeTemplate}
-              />
-            )}
-       
-
-          <a
-            href="https://github.com/vinissimus/next-translate"
-            className="card"
-          >
-            <h3>{`Learn ${arrow}`}</h3>
-            <p>{t('home:plugin-docs')}</p>
-          </a>
-        </div>
-      </main>
-
-     
-    </Layout>
+    </div>
   )
 }

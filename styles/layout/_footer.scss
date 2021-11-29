@@ -1,0 +1,45 @@
+footer{
+    background-color: #eee;
+    color: $dark-color;
+  box-shadow: 1px 1px 10px #4444449e;
+
+   .dark-mode & {
+       background-color: darken($dark-color, 20);
+       color: lighten($dark-color, 40);
+   }
+    .content{
+        ul{
+            li{
+                @include easeInOut;
+                a{
+                    color: #D6D6D6;
+                    @include easeInOut;
+                }
+                &:hover{
+                     border-inline-start: 1px solid $primary-color;
+                    a{
+                            color: $primary-color;
+                            display: inline-block;
+                            padding-inline-start: .5rem;
+                        }
+                    }
+    
+            }
+        }
+
+    }
+
+
+  
+
+    .social-links {
+          
+        svg{
+            @include easeInOut;
+            margin: 0 .4rem;
+            &:hover{
+                transform:  translateY(-10px) scale(1.5);
+            }
+        }
+    }
+}

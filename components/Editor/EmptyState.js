@@ -1,4 +1,6 @@
 import { Button, IconLoader, Typography } from '@supabase/ui'
+import useTranslation from 'next-translate/useTranslation'
+
 import { useRef } from 'react'
 
 const EmptyState = ({
@@ -7,6 +9,7 @@ const EmptyState = ({
   onSelectChangeTemplate = () => {},
 }) => {
   const uploadButtonRef = useRef(null)
+  const { t, lang } = useTranslation('common')
 
   const onSelectUpload = () => {
     if (uploadButtonRef.current) {
@@ -23,7 +26,7 @@ const EmptyState = ({
         </>
       ) : (
         <>
-          <div className="hidden">
+          <div className="d-none">
             <input
               ref={uploadButtonRef}
               type="file"
@@ -32,11 +35,11 @@ const EmptyState = ({
             />
           </div>
           <Button type="secondary" onClick={onSelectUpload}>
-            Upload your own imageeeeee
+          {t('home.upload-image')}
           </Button>
           <div className="border-b border-gray-600 w-48" />
           <Button type="primary" onClick={onSelectChangeTemplate}>
-            Select a template
+              {t('home.select-template')}
           </Button>
         </>
       )}

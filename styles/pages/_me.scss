@@ -1,0 +1,33 @@
+.me-page{
+    min-height: 100vh;
+    padding-top: 5rem;
+
+    .content{
+        .image-container{
+            position: relative;
+        }
+        .title{
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10px;
+            font-size: 2rem;
+            color: white !important;
+            font-family: 'dintext';
+            [dir = ltr] & {
+                font-family: Impact;
+                 -webkit-text-stroke: 2px rgb(24 24 24);
+            }
+        }
+        .subtitle{
+            color: darken($text-color, 40);
+            .dark-mode & {
+                color: lighten($text-color, 40);
+            }
+            font-size: 1.2rem;
+          }
+        a{
+            color: inherit;
+        }
+    }
+}
