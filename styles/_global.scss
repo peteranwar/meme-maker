@@ -33,6 +33,24 @@
     }
  }
 
+ .my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 20px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  margin-bottom: 20px;
+}
+
 
    /* style scrollbar */
 ::-webkit-scrollbar {
@@ -62,7 +80,64 @@
 }
 
 
+.main-title{
+  border-bottom: 4px solid black;
+  max-width: max-content;
+  position: relative;
+  @include easeInOut;
 
+  h1{
+    font-size: 30px;
+    padding: 2px 0 !important;
+    @media screen and (max-width: 768px) {
+      font-size: 26px;
+    }
+    @media screen and (max-width: 450px) {
+      font-size: 24px;
+    }
+  }
+
+  &:after,
+  &:before{
+    position: absolute;
+    content: '';
+    @include easeInOut;
+    z-index: 5;
+    height: 8px;
+    border-top-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+  }
+
+  &:after{
+    background-color: #707070;
+    width: 50%;
+    bottom: -6px;
+    right: -5px;
+  }
+
+  &:before{
+    background-color: $primary-color;;
+    width: 30%;
+    bottom: -6px;
+    left: -5px;
+  }
+
+  &:hover{
+
+    &:before{
+      transform: translateX(100%);
+      z-index: 9;
+
+    }
+    &:after{
+      width: 105%;
+      height: 5px;
+      bottom: -4px;
+
+    }
+  }
+}
+ 
 
 
 //////////

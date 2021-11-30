@@ -84,13 +84,13 @@ export default function Home() {
           {<Trans
             i18nKey="common:home.title"
             components={[
-              <h1 className="title"/>,
+              <h1 className="title" />,
               <span ></span>,
             ]}
           />}
 
-        <h4 className="subtitle">{t('home.subtitle')}</h4>
-          
+          <h4 className="subtitle">{t('home.subtitle')}</h4>
+
         </div>
 
         {typeof window !== 'undefined' && (
@@ -109,7 +109,7 @@ export default function Home() {
           />
         )}
 
-<TemplatesPanel
+        <TemplatesPanel
           templates={templates}
           loadingAssets={loadingAssets}
           uploading={uploading}

@@ -34,7 +34,6 @@ const me = () => {
                                <Link href="/">
                                 <a className="pb-1"> {t('me.not-pass.link')} </a>
                                </Link>
-
                             </Button>
 
                         </div>

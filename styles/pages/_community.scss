@@ -1,0 +1,22 @@
+.community-page{
+
+    .header-container{
+        position: relative;
+        button{
+            position: absolute;
+            right: 0;
+            top: 1rem;
+            font-size: 14px;
+            @media screen and (max-width: 400px) {
+                top: 4rem;
+            }
+            [dir = rtl] &{
+                left: 0;
+                right: auto;
+            }
+        }
+        a{
+            color: white !important;
+        }
+    }
+}

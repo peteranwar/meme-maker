@@ -1,4 +1,5 @@
 {
+  "title": "Memes Maker",
   "navbar": {
     "login": "Log in",
     "browse-memes": "Browes memes",
@@ -35,5 +36,9 @@
     "save": "Save",
     "save-meme": "Save your meme",
     "export": "Eport as PNG"
+  },
+  "community":{
+    "title": "Community Memes",
+    "link": "Make your own memes!"
   }
 }

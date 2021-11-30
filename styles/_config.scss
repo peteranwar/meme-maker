@@ -1,14 +1,14 @@
 $primary-color: #24b47e; //#9E5F0A  //#24b47e
 $text-color: #707070;
 $gradient-color: linear-gradient(to right, #E66B32 , #D9202D, #A31E23);
-$radius: 7px;
+$radius: 5px;
 
 $dark-color: #181818;
 
 
 
 @mixin easeInOut {
-    transition: all .5s ease;
+    transition: all .3s ease;
   }
 
  

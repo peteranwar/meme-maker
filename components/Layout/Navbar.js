@@ -128,7 +128,7 @@ const Navbar = ({ }) => {
                             </Dropdown>
 
                             <Button onClick={handleShowModal} variant="primary" className="d-flex align-items-center  my-2 px-3 border-0 pb-2 mx-2" >
-                                <span className="pb-1"> {t('navbar.login')} </span>
+                               {t('navbar.login')} 
                             </Button>
 
                             <div className={`change-lang mx-2 pb-2 d-flex justify-content-end align-items-center  flex-column flex-md-row  ${openNav ? "open-nav" : ''}`} >

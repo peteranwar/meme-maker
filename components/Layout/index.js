@@ -17,7 +17,7 @@ const index = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar  />
-      <main style={{marginTop: '90px'}}>
+      <main style={{marginTop: '90px', minHeight: "100vh"}}>
         {children}
       </main>
       <Footer />
