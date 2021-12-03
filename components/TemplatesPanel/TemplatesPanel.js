@@ -1,5 +1,7 @@
 import { Button, IconLoader, SidePanel, Typography } from '@supabase/ui'
 import { useRef } from 'react'
+import useTranslation from 'next-translate/useTranslation'
+
 import * as R from 'ramda'
 
 const TemplatesPanel = ({
@@ -11,7 +13,9 @@ const TemplatesPanel = ({
   onTemplateUpload = () => {},
   hideTemplatesPanel = () => {},
 }) => {
-  const uploadButtonRef = useRef(null)
+  const uploadButtonRef = useRef(null);
+
+  const { t, lang } = useTranslation('common')
 
   const onSelectUpload = () => {
     if (uploadButtonRef.current) {
@@ -22,8 +26,8 @@ const TemplatesPanel = ({
   return (
     <SidePanel
       hideFooter
-      title="Select a template"
-      description="Choose from our list of templates or upload your own!"
+      title={t('templatePanel.title')}
+      description={t('templatePanel.subtitle')}
       visible={visible}
       onCancel={hideTemplatesPanel}
     >
@@ -37,7 +41,8 @@ const TemplatesPanel = ({
           />
         </div>
         <Button block loading={uploading} onClick={onSelectUpload}>
-          {!uploading ? 'Upload your own template' : 'Uploading template'}
+          {/* {!uploading ? 'Upload your own template' : 'Uploading template'} */}
+          {t('templatePanel.btnText')}
         </Button>
 
         <div className="mt-4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 190px)' }}>
@@ -47,7 +52,7 @@ const TemplatesPanel = ({
               style={{ height: 'calc(100vh - 190px)' }}
             >
               <IconLoader className="text-white animate-spin" />
-              <Typography.Text small>Loading templates</Typography.Text>
+              <Typography.Text small>{t('templatePanel.loading')}</Typography.Text>
             </div>
           ) : (
             <div className="grid grid-cols-3 gap-3">

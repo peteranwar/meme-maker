@@ -40,5 +40,11 @@
   "community":{
     "title": "Community Memes",
     "link": "Make your own memes!"
+  },
+  "templatePanel": {
+    "title": "Select a template",
+    "subtitle": "Choose from our list of templates or upload your own!",
+    "btnText": "Upload your own template",
+    "loading": "Loading..."
   }
 }

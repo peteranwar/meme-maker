@@ -7,28 +7,27 @@ import { useRouter } from 'next/router'
 
 import React, { useEffect, useState } from 'react'
 
-
+import { UserDataProvider } from '../context/UserDataState'
 
 function MyApp({ Component, pageProps }) {
-    const router = useRouter()
+  const router = useRouter()
 
 
-    useEffect(() => {
-      let dir = router.locale === "en" ? "ltr" : "rtl";
-      document.querySelector("html").setAttribute("dir", dir);
-      document.querySelector("html").setAttribute("lang", router.locale);
-      // localStorage.setItem("language", JSON.stringify(router.query.locale))
-    }, [router.locale])
-  
-    
-    return (
+  useEffect(() => {
+    let dir = router.locale === "en" ? "ltr" : "rtl";
+    document.querySelector("html").setAttribute("dir", dir);
+    document.querySelector("html").setAttribute("lang", router.locale);
+    // localStorage.setItem("language", JSON.stringify(router.query.locale))
+  }, [router.locale])
+
+
+  return (
+    <UserDataProvider >
       <Layout>
-        <div >
-          <Component {...pageProps}   />
-        </div>
+        <Component {...pageProps} />
       </Layout>
-    )
-  }
-  
-  export default MyApp
-  
+    </UserDataProvider>
+  )
+}
+
+export default MyApp

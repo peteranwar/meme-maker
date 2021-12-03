@@ -89,7 +89,7 @@ export default function Home() {
             ]}
           />}
 
-          <h4 className="subtitle">{t('home.subtitle')}</h4>
+          <h4 className="subtitle">{t('home.subtitle')} 💚</h4> 
 
         </div>
 

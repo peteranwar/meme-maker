@@ -86,7 +86,6 @@ const Navbar = ({ }) => {
     return (
         <>
             <nav className={headerClasses()}>
-
                 <div className={`menuBtn ${openNav ? 'closeMenu' : ''}`} onClick={() => setOpenNav(!openNav)} >
                     <div className="btnLine"></div>
                     <div className="btnLine"></div>
@@ -164,7 +163,7 @@ const Navbar = ({ }) => {
             {/* Modal Login */}
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Body>
-                    {<Login />}
+                    {<Login handleCloseModal={handleCloseModal} />}
                 </Modal.Body>
             </Modal>
 
