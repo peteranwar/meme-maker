@@ -2,6 +2,8 @@
   "title": "Memes Maker",
   "navbar": {
     "login": "Log in",
+    "logout": "Log out",
+    "logged-as": "Logged in as:",
     "browse-memes": "Browes memes",
     "your-memes": "Your saved memes",
     "community-memes": "Community memes"

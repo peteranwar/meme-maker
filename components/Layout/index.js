@@ -6,6 +6,7 @@ import {Modal, Button} from 'react-bootstrap';
 import Footer from './Footer'
 import Navbar from './Navbar'
 import LoginModal from '../Login'
+import UserDataProvider from '../../context/UserDataState';
 
 const index = ({ children }) => {
   const { t } = useTranslation()

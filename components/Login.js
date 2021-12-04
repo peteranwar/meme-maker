@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Image from "next/image"
+import { toast } from 'react-hot-toast'
 
 import { Modal, Button } from 'react-bootstrap';
 import { AiOutlineMail, AiOutlineKey, AiOutlineLogin } from 'react-icons/ai'
@@ -7,10 +8,11 @@ import { BiLogIn } from 'react-icons/bi'
 
 import useTranslation from 'next-translate/useTranslation'
 import { useUserData } from '../context/UserDataState';
+import { createAPIEndpoint } from '../apiUtilis';
 
 function Login({ show, handleCloseModal }) {
   
-  const { t, i18n } = useTranslation('common');
+  const { t, i18n, lang} = useTranslation('common');
   const [view, setView] = useState('SIGN_IN')
   const [formValues, setFormValues] = useState({ email: '', password: '' })
   
@@ -25,11 +27,46 @@ function Login({ show, handleCloseModal }) {
 
   function handleLoginSubmit(e) {
     e.preventDefault();
+    if(view === 'SIGN_IN') {
+      createAPIEndpoint('login', lang).create(formValues)
+      .then(res => {
+          // console.log('res dff from login', res);
+          console.log('res dff from loginnnnnnn', res);
+        if(res.data.status === true){
+          console.log('res dff from loginnnnnnn status true', res);
 
-    setUserData(formValues);
+          localStorage.setItem("isLogin", JSON.stringify(true));
+          localStorage.setItem("userData", JSON.stringify(res.data.user))
+          setUserData(res.data.user);
+          toast.success(`${res.data.msg} 😄`)
+        } else {
+          toast.error(res.data.msg)
+        }
+      })
+      .catch(err => {
+        console.log('err from rgister', err);
+      });
+  
+    } else {
+      createAPIEndpoint('/register', lang).create(formValues)
+      .then(res => {
+        // toast.error('Please enter a password')
+        console.log('res dff from registerrrrrr', res);
+        if(res.data.status === true){
+          localStorage.setItem("isLogin", JSON.stringify(true));
+          localStorage.setItem("userData", JSON.stringify(res.data.token))
+          setUserData(res.data.token)
+        } else {
+          toast.error(res.data.msg)
+        }
+      })
+      .catch(err => {
+          console.log('err from rgister', err);
+      });
+    }
+
     handleCloseModal()
     
-    console.log('fff', formValues)
   }
 
   const handleChange = (e) => {

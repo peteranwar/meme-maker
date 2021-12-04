@@ -36,6 +36,8 @@ import {
   TextStrokeColour,
 } from '../EditorControls'
 import toast from 'react-hot-toast'
+import { useUserData } from '../../context/UserDataState';
+import { createAPIEndpoint } from '../../apiUtilis';
 
 const STICKERS_BUCKET = process.env.NEXT_PUBLIC_SUPABASE_STICKERS_BUCKET
 
@@ -57,7 +59,8 @@ const Editor = ({
     height: 450,
   }
 
-  const { t, i18n } = useTranslation('common')
+  const { t, i18n, lang } = useTranslation('common')
+  const [userData, setUserData] = useUserData();
 
 
   const editorRef = useRef(null)
@@ -344,20 +347,33 @@ const Editor = ({
   }
 
   const onSaveTemplate = async () => {
-    if (!user) {
-      return toast('Log in to save your memes!', { icon: '🔒' })
+    if (!userData) {
+      return toast(`${lang === 'ar' ? 'قم بتسجيل الدخول أولا ثم أحفظ الميم!' : 'Log in to save your memes!'}`, { icon: '🔒' })
     }
     const canvasJson = getCanvasJson(editorRef.current)
     const dataURL = editorRef.current.toDataURL('image/png', 1.0)
     const file = dataURLtoFile(dataURL, v4())
-    await saveUserTemplate(user, file, canvasJson, selectedTemplate)
+    // await saveUserTemplate(user, file, canvasJson, selectedTemplate)
+    await createAPIEndpoint('save-image', lang, userData.token).create({
+      image: dataURL
+    }).
+    then(res=> {
+      console.log('res cora', res)
+
+    })
+    .catch(err=> {
+      console.log('err cora', err)
+
+    })
+    // console.log('cora', file)
+    // console.log('cora', dataURL)
     return toast.success('Successfully saved your meme!', { icon: '🎁' })
   }
 
   const onExportCanvas = () => {
     const link = document.createElement('a')
     link.href = editorRef.current.toDataURL('image/png', 1.0)
-    link.setAttribute('download', `supameme.png`)
+    link.setAttribute('download', `meme-maker.png`)
     document.body.appendChild(link)
     link.click()
     link.parentNode.removeChild(link)
@@ -371,7 +387,8 @@ const Editor = ({
       particleCount: randomInRange(50, 100),
       origin: { y: 0.6 },
     })
-    return toast.success('Enjoy your meme!', { icon: '🥳' })
+    return toast(`${lang === 'ar' ? 'استمتع بالميم بتاعك!' : 'Enjoy your meme!'}`, { icon:'🥳' })
+
   }
 
   return (
@@ -479,35 +496,7 @@ const Editor = ({
               ) : (
                 <div />
               )}
-              {/* <Dropdown
-            align="end"
-            overlay={[
-              ...(isAdmin
-                ? [
-                    <Dropdown.Item
-                      key="save-default-template"
-                      icon={<IconArchive />}
-                      onClick={onSaveDefaultTemplate}
-                    >
-                      Save as default template
-                    </Dropdown.Item>,
-                  ]
-                : []),
-              <Dropdown.Item key="save-template" icon={<IconSave />} onClick={onSaveTemplate}>
-                Save your meme
-              </Dropdown.Item>,
-              <Dropdown.Item key="export" icon={<IconImage />} onClick={onExportCanvas}>
-                Export as PNG
-              </Dropdown.Item>,
-            ]}
-          >
-            <Button
-              type="primary"
-              iconRight={<IconChevronDown className="text-white" strokeWidth={2} />}
-            >
-              Save
-            </Button>
-          </Dropdown> */}
+           
               <Dropdown className="mx-2 my-2">
                 <Dropdown.Toggle className="secondary-btn d-flex align-items-center" id="dropdown-basic">
                   <span className="mx-2  pb-1"> {t('editor.save')}</span>

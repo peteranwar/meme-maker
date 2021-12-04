@@ -2,6 +2,8 @@
   "title": "صانع الميمز",
   "navbar": {
     "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "logged-as": "تم تسجيل الدخول گ :",
     "browse-memes": "تصفح الميمز",
     "your-memes": "الميمز المحفوظة",
     "community-memes": "مجتمع الميمز"

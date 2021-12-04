@@ -4,10 +4,21 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import Layout from '../components/Layout'
 import { useRouter } from 'next/router'
-
+import dynamic from 'next/dynamic'
 import React, { useEffect, useState } from 'react'
 
-import { UserDataProvider } from '../context/UserDataState'
+import { Toaster, toast } from 'react-hot-toast'
+import * as Portal from '@radix-ui/react-portal'
+import { IdProvider } from '@radix-ui/react-id'
+
+import { SSRProvider } from '@react-aria/ssr';
+
+// import { UserDataProvider } from '../context/UserDataState'
+const UserDataProvider= dynamic(
+  () => import('../context/UserDataState'),
+  { ssr: false, loading: () => <p>Loading...</p>, }
+  
+)
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter()
@@ -22,11 +33,28 @@ function MyApp({ Component, pageProps }) {
 
 
   return (
-    <UserDataProvider >
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </UserDataProvider>
+    <SSRProvider >
+      <UserDataProvider >
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <Portal.Root className="portal--toast">
+          <Toaster
+            toastOptions={{
+              className:
+                'dark:bg-bg-primary-dark dark:text-typography-body-strong-dark border border-gray-500',
+              style: {
+                padding: '8px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+                fontSize: '0.875rem',
+              },
+            }}
+          />
+        </Portal.Root>
+      </UserDataProvider>
+    </SSRProvider>
+
   )
 }
 
