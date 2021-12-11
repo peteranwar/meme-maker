@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Trans from 'next-translate/Trans'
 import useTranslation from 'next-translate/useTranslation'
@@ -6,11 +6,12 @@ import * as R from 'ramda'
 
 import Editor from '../components/Editor/Editor'
 import TemplatesPanel from '../components/TemplatesPanel/TemplatesPanel'
-export default function Home() {
+import { createAPIEndpoint } from '../apiUtilis'
+export default function Home(props) {
   const { t, lang } = useTranslation('common')
 
 
-  const [templates, setTemplates] = useState([])
+  // const [templates, setTemplates] = useState([])
   const [stickers, setStickers] = useState([])
 
   const [loadingAssets, setLoadingAssets] = useState(true)
@@ -53,7 +54,7 @@ export default function Home() {
     // const formattedKey = key.split('/').slice(1).join('/')
     // const url = await getSignedUrl(TEMPLATES_BUCKET, formattedKey)
     const base64 = await convertBase64(file);
-    console.log('base64', base64)
+    // console.log('base64', base64)
     setUploadedFileUrl(base64)
     setUploading(false)
     setShowTemplatesPanel(false)
@@ -61,24 +62,25 @@ export default function Home() {
   }
 
 
-  const loadTemplate = async (template) => {
-    const formattedTemplate = await resignTemplateUrls(template)
-    setSelectedTemplate(formattedTemplate)
+
+  const onTemplateUpload2 = async (img) => {
+
+    console.log('img from homee', img)
+    setUploadedFileUrl(img)
+    setUploading(false)
     setShowTemplatesPanel(false)
   }
 
+
+  const loadTemplate = async (img) => {
+    setSelectedTemplate(img)
+    setShowTemplatesPanel(false)
+  }
+
+
+
   return (
     <div className="home-page">
-      {/* <Trans
-          i18nKey="home:title"
-          components={[
-            <h1 className="title" />,
-            <a href="https://nextjs.org">Next.js!</a>,
-          ]}
-        /> */}
-
-
-
       <div className="">
         <div className="text-center pt-3 pb-4">
           {<Trans
@@ -88,11 +90,8 @@ export default function Home() {
               <span ></span>,
             ]}
           />}
-
-          <h4 className="subtitle">{t('home.subtitle')} 💚</h4> 
-
+          <h4 className="subtitle">{t('home.subtitle')} 💚</h4>
         </div>
-
         {typeof window !== 'undefined' && (
           <Editor
             // stickers={stickers}
@@ -100,7 +99,6 @@ export default function Home() {
             isMobile={isMobile}
             // isAdmin={isAdmin}
             loadTemplate={loadTemplate}
-
             selectedTemplate={selectedTemplate}
             uploading={uploading}
             uploadedFileUrl={uploadedFileUrl}
@@ -108,22 +106,37 @@ export default function Home() {
             onSelectChangeTemplate={onSelectChangeTemplate}
           />
         )}
-
         <TemplatesPanel
-          templates={templates}
+          templates={props.templates}
           loadingAssets={loadingAssets}
+          onTemplateUpload2={onTemplateUpload2}
           uploading={uploading}
+
+          
+          uploadedFileUrl={uploadedFileUrl}
+
+
           visible={showTemplatesPanel}
           loadTemplate={loadTemplate}
           onTemplateUpload={onTemplateUpload}
           hideTemplatesPanel={() => setShowTemplatesPanel(false)}
         />
-
-
-
       </div>
-
-
     </div>
   )
+}
+
+
+export async function getStaticProps(context) {
+  let templates = "";
+  templates = await createAPIEndpoint('images', context.locale).fetchAll()
+    .then(res => {
+      return res.data.images
+    })
+  return {
+    props: {
+      templates: templates || [],
+    },
+    revalidate: 10000000,
+  };
 }

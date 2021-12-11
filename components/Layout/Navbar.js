@@ -28,7 +28,6 @@ const Navbar = ({ }) => {
 
     const [showModal, setShowModal] = useState(false);
 
-    console.log('from naaaaaav', userData)
     const handleCloseModal = () => setShowModal(false);
     const handleShowModal = () => setShowModal(true);
 

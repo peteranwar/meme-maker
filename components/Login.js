@@ -30,10 +30,7 @@ function Login({ show, handleCloseModal }) {
     if(view === 'SIGN_IN') {
       createAPIEndpoint('login', lang).create(formValues)
       .then(res => {
-          // console.log('res dff from login', res);
-          console.log('res dff from loginnnnnnn', res);
         if(res.data.status === true){
-          console.log('res dff from loginnnnnnn status true', res);
 
           localStorage.setItem("isLogin", JSON.stringify(true));
           localStorage.setItem("userData", JSON.stringify(res.data.user))
@@ -48,7 +45,7 @@ function Login({ show, handleCloseModal }) {
       });
   
     } else {
-      createAPIEndpoint('/register', lang).create(formValues)
+      createAPIEndpoint('register', lang).create(formValues)
       .then(res => {
         // toast.error('Please enter a password')
         console.log('res dff from registerrrrrr', res);
@@ -56,6 +53,8 @@ function Login({ show, handleCloseModal }) {
           localStorage.setItem("isLogin", JSON.stringify(true));
           localStorage.setItem("userData", JSON.stringify(res.data.token))
           setUserData(res.data.token)
+          toast.success(`${res.data.msg} 😄`)
+
         } else {
           toast.error(res.data.msg)
         }

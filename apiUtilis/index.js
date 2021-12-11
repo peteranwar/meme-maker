@@ -13,7 +13,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_MAIN_API;
 // }
 
 
-export const createAPIEndpoint = (endpoint, lang, token) => {
+export const createAPIEndpoint = (endpoint, lang, token = null) => {
     let url = BASE_URL + endpoint;
  
     const options = {
@@ -28,7 +28,8 @@ export const createAPIEndpoint = (endpoint, lang, token) => {
         fetchAll: () => axios.get(url, options),
         fetchById: id => axios.get(url + id, options),
         create: newRecord => axios.post(url, newRecord, options),
-        delete: (id) => axios.delete(url + id),
+        // delete: (id) => axios.delete(url + id, options),
+        delete: (id) => axios.delete(url, options),
         update: (id, updatedRecord) => axios.put(url + id, updatedRecord, options),
     }
 }

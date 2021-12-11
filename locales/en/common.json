@@ -48,5 +48,6 @@
     "subtitle": "Choose from our list of templates or upload your own!",
     "btnText": "Upload your own template",
     "loading": "Loading..."
-  }
+  },
+  "upload-sticker": "Upload sticker"
 }

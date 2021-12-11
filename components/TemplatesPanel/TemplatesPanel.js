@@ -5,12 +5,17 @@ import useTranslation from 'next-translate/useTranslation'
 import * as R from 'ramda'
 
 const TemplatesPanel = ({
-  templates = [],
+  templates ,
+
+  uploadedFileUrl,
+
+
   loadingAssets = false,
   uploading = false,
   visible = false,
   loadTemplate = () => {},
   onTemplateUpload = () => {},
+  onTemplateUpload2 = () => {},
   hideTemplatesPanel = () => {},
 }) => {
   const uploadButtonRef = useRef(null);
@@ -46,7 +51,7 @@ const TemplatesPanel = ({
         </Button>
 
         <div className="mt-4 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 190px)' }}>
-          {loadingAssets ? (
+          {templates.length < 0 ? (
             <div
               className="space-y-2 flex flex-col items-center justify-center"
               style={{ height: 'calc(100vh - 190px)' }}
@@ -59,10 +64,10 @@ const TemplatesPanel = ({
               {R.map(
                 (template) => (
                   <div
-                    key={template.name}
+                    key={template.id}
                     className="h-32 bg-center bg-no-repeat bg-cover rounded-md cursor-pointer"
-                    style={{ backgroundImage: `url('${template.url}')` }}
-                    onClick={() => loadTemplate(template)}
+                    style={{ backgroundImage: `url('${template.image_path}')` }}
+                    onClick={() => onTemplateUpload2(template.image_path)}
                   />
                 ),
                 templates

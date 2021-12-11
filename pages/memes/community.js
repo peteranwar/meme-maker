@@ -6,9 +6,9 @@ import Image from "next/image"
 import { Button } from 'react-bootstrap';
 import ModalImage from "react-modal-image";
 import Masonry from 'react-masonry-css'
+import { createAPIEndpoint } from '../../apiUtilis/index'
 
-
-const community = () => {
+const community = (props) => {
     const { t } = useTranslation('common');
 
     const breakpointColumnsObj = {
@@ -16,8 +16,8 @@ const community = () => {
         1100: 3,
         700: 2,
         500: 1
-      };
-
+    };
+    // console.log('props', props.images)
     return (
         <div className="community-page">
             <div className="container">
@@ -38,55 +38,50 @@ const community = () => {
                             breakpointCols={breakpointColumnsObj}
                             className="my-masonry-grid mt-5"
                             columnClassName="my-masonry-grid_column">
-                            {/* array of JSX items */}
-                        <ModalImage
-                            small='/assets/images/doge.png'
-                            large='/assets/images/doge.png'
-                            alt="Hello World!"
-                            showRotate
-                        />
-                        <ModalImage
+                            {/* <ModalImage
                             small='/assets/images/girl-running.png'
                             large='/assets/images/girl-running.png'
                             alt="Hello World!"
-                        />
-                           <ModalImage
-                            small='/assets/images/doge.png'
-                            large='/assets/images/doge.png'
-                            alt="Hello World!"
-                            showRotate
-                        />
-                        <ModalImage
-                            small='/assets/images/girl-running.png'
-                            large='/assets/images/girl-running.png'
-                            alt="Hello World!"
-                            showRotate
-                        />
-                           <ModalImage
-                            small='/assets/images/doge.png'
-                            large='/assets/images/doge.png'
-                            alt="Hello World!"
-                        />
-                        <ModalImage
-                            small='/assets/images/girl-running.png'
-                            large='/assets/images/girl-running.png'
-                            alt="Hello World!"
-                        />
+                        /> */}
+                            {props.images.length > 0 ?
+                                props.images.map(img => (
+                                    <ModalImage
+                                        key={img.id}
+                                        small={img.image_path}
+                                        large={img.image_path}
+                                        alt="meme!"
+                                        showRotate
+                                    />
+                                )) :
+                                <h1>No Memes</h1>
+                            }
                         </Masonry>
-                     
-
 
 
                     </div>
-
                 </div>
-
             </div>
-
-
-
         </div>
     )
 }
 
 export default community
+
+
+export async function getStaticProps(context) {
+    // console.log('contextttttttttttttttttttttttttt about', context.locale)
+    let images = "";
+
+    images = await createAPIEndpoint('images', context.locale).fetchAll()
+        .then(res => {
+            console.log('resssssssss', res.data)
+            return res.data.images
+        })
+
+    return {
+        props: {
+            images: images || [],
+        },
+        revalidate: 10000000,
+    };
+}

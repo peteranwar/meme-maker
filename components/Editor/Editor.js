@@ -354,6 +354,8 @@ const Editor = ({
     const dataURL = editorRef.current.toDataURL('image/png', 1.0)
     const file = dataURLtoFile(dataURL, v4())
     // await saveUserTemplate(user, file, canvasJson, selectedTemplate)
+    console.log('res cora', dataURL)
+
     await createAPIEndpoint('save-image', lang, userData.token).create({
       image: dataURL
     }).
@@ -415,7 +417,7 @@ const Editor = ({
 
                 <FontSize selectedObject={selectedObject} updateTextAttribute={updateTextAttribute} />
 
-                <div className="flex items-center space-x-1">
+                <div className=" flex items-center space-x-1">
                   <TextFillColour
                     swatches={DEFAULT_SWATCHES}
                     selectedObject={selectedObject}
@@ -520,3 +522,5 @@ const Editor = ({
 }
 
 export default Editor
+
+

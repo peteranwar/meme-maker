@@ -30,4 +30,19 @@
             color: inherit;
         }
     }
+
+
+    .imageMeme-container{
+        position: relative;
+        .delete{
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            @include easeInOut;
+            &:hover{
+              transform: scale(1.1) rotate(360deg);
+            }
+        }
+    }
 }
